@@ -20,14 +20,21 @@ TARGET_LIB = decimal_drv.so
 OBJ = decContext.o decNumber.o decimal64.o decimal128.o \
       decQuad.o decPacked.o decimal_drv.o
 
-all: $(TARGET_LIB)
+all: ../priv/lib $(TARGET_LIB)
 
 .c.o:
 	$(CC) $(CFLAGS) -Wall $(ERL_INCLUDE) $(EI_INCLUDE) -c $<
 
 $(TARGET_LIB): $(OBJ)
-	$(LD) $(LIBS) $(ERL_LIBS) $(EI_LIBS) -o $@  $^
-	cp decimal_drv.so ../priv/lib 
+	$(LD) $(LIBS) $(ERL_LIBS) $(EI_LIBS) -o $@ $^
+	$(CP) $(TARGET_LIB) ../priv/lib 
+
+../priv:
+	$(MKDIR) ../priv
+
+../priv/lib: ../priv
+	$(MKDIR) ../priv/lib
 
 clean:
-	rm -f *.o *.so
+	$(RM) -f *.o $(TARGET_LIB)
+	$(RM) -f ../priv/lib/$(TARGET_LIB)

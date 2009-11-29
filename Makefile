@@ -3,13 +3,12 @@ APP = decimal
 C_SRC = c_src
 DOC = doc
 EBIN = ebin
-INCLUDE = include
 SRC = src
 PWD = $(shell pwd)
 
 ERL = erl
 ERLC = erlc
-CFLAGS = -I $(INCLUDE) -pa $(EBIN) -o $(EBIN)
+CFLAGS = -pa $(EBIN) -o $(EBIN)
 
 .PHONY: c_src
 
@@ -45,3 +44,4 @@ clean:
 	rm -rf $(EBIN)/*.boot $(EBIN)/*.rel $(EBIN)/*.script
 	rm -rf $(DOC)/*.html $(DOC)/*.css $(DOC)/erlang.png doc/edoc-info
 	$(MAKE) --directory=$(C_SRC) clean
+
